@@ -1,0 +1,13 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "npm",
+			"script": "lint",
+			"path": "typescript",
+			"problemMatcher": [],
+			"label": "npm: lint - typescript",
+			"detail": "eslint ."
+		}
+	]
+}

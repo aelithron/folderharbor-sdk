@@ -4,6 +4,7 @@
   "description": "TypeScript SDK for FolderHarbor",
   "main": "dist/index.js",
   "scripts": {
+    "lint": "eslint .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -11,6 +12,11 @@
   "license": "MIT",
   "type": "module",
   "devDependencies": {
-    "@types/node": "^25.9.1"
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^25.9.1",
+    "eslint": "^10.4.1",
+    "globals": "^17.6.0",
+    "jiti": "^2.7.0",
+    "typescript-eslint": "^8.60.0"
   }
 }
