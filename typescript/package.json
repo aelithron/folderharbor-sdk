@@ -1,0 +1,16 @@
+{
+  "name": "folderharbor-sdk",
+  "version": "0.1.0",
+  "description": "TypeScript SDK for FolderHarbor",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Nova",
+  "license": "MIT",
+  "type": "module",
+  "devDependencies": {
+    "@types/node": "^25.9.1"
+  }
+}
