@@ -37,11 +37,14 @@ export class FolderHarbor {
   }
 
   public auth = {
-    login: async (body: { username: string, password: string }): Promise<{ token: string }> => {
-      
+    login: async (body: { username: string, password: string, persist?: boolean }): Promise<{ token: string }> => {
+      const res = await this.request<{ token: string }>("auth", { method: "POST", body: JSON.stringify({ username: body.username, password: body.password }) });
+      if (body.persist !== false) this.#token = res.token;
+      return { token: res.token };
     },
     logout: async () => {
-
+      await this.request("auth", { method: "DELETE" });
+      this.#token = undefined;
     }
   }
 }
