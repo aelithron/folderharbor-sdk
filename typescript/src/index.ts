@@ -1,5 +1,6 @@
 import type { FolderHarborConfig } from "../sdk";
 import { FHConfigError, FHRequestError, FHUserError } from "./errors";
+import { MeResource } from "./resources/me";
 
 export class FolderHarbor {
   #server: string;
@@ -8,6 +9,8 @@ export class FolderHarbor {
     if (!config.server) throw new FHConfigError("Invalid server address");
     this.#server = config.server;
     if (config.token) this.#token = config.token;
+    
+    this.me = new MeResource(this);
   }
   async request<T>(path: string, init?: RequestInit): Promise<T> {
     let body: object | undefined;
@@ -47,4 +50,5 @@ export class FolderHarbor {
       this.#token = undefined;
     }
   }
+  public me: MeResource;
 }
