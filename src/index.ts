@@ -1,6 +1,7 @@
 import type { FolderHarborConfig } from "../sdk";
 import { FHConfigError, FHRequestError, FHUserError } from "./errors";
 import { MeResource } from "./resources/me";
+import { AdminResource } from "./resources/admin";
 
 export class FolderHarbor {
   #server: string;
@@ -11,6 +12,7 @@ export class FolderHarbor {
     if (config.token) this.#token = config.token;
     
     this.me = new MeResource(this);
+    this.admin = new AdminResource(this);
   }
   async request<T>(path: string, init?: RequestInit): Promise<T> {
     let body: object | undefined;
@@ -47,11 +49,17 @@ export class FolderHarbor {
     logout: async () => {
       await this.request("auth", { method: "DELETE" });
       this.#token = undefined;
+    },
+    register: async (body: FHLogin): Promise<{ token: string }> => {
+      const res = await this.request<{ token: string }>("auth/register", { method: "POST", body: JSON.stringify({ username: body.username, password: body.password }) });
+      if (body.persist !== false) this.#token = res.token;
+      return { token: res.token };
     }
   }
   public clientconfig = async (): Promise<FHClientConfig> => { return await this.request<FHClientConfig>("clientconfig"); }
   public protocols = async (): Promise<FHProtocols> => { return await this.request<FHProtocols>("protocols"); }
   public me: MeResource;
+  public admin: AdminResource;
 }
 
 export type FHLogin = { username: string, password: string, persist?: boolean }
