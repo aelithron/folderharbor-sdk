@@ -24,23 +24,22 @@ export class FolderHarbor {
     try {
       const res = await fetch(url.toString(), { ...init, headers });
       if (res.status !== 204) body = await res.json() as object;
-    } catch (e) { throw new FHRequestError("Error while fetching from the server", { cause: e }) }
+    } catch (e) { throw new FHRequestError("Error while fetching from the server", undefined, { cause: e }) }
     if (body && "error" in body) {
       switch(body.error) {
         case "locked":
-          throw new FHUserError("User account is locked");
         case "invalid":
         case "expired":
-          throw new FHUserError(`Session token is ${body.error}`);
+          throw new FHUserError(`Error from the server: ${(body as { error: string, message: string }).message}`, body.error as string);
         default:
-          throw new FHRequestError(`Error from the server: ${body.error}`);
+          throw new FHRequestError(`Error from the server: ${(body as { error: string, message: string }).message}`, body.error as string);
       }
     }
     return body as T;
   }
 
   public auth = {
-    login: async (body: { username: string, password: string, persist?: boolean }): Promise<{ token: string }> => {
+    login: async (body: FHLogin): Promise<{ token: string }> => {
       const res = await this.request<{ token: string }>("auth", { method: "POST", body: JSON.stringify({ username: body.username, password: body.password }) });
       if (body.persist !== false) this.#token = res.token;
       return { token: res.token };
@@ -50,5 +49,11 @@ export class FolderHarbor {
       this.#token = undefined;
     }
   }
+  public clientconfig = async (): Promise<FHClientConfig> => { return await this.request<FHClientConfig>("clientconfig"); }
+  public protocols = async (): Promise<FHProtocols> => { return await this.request<FHProtocols>("protocols"); }
   public me: MeResource;
 }
+
+export type FHLogin = { username: string, password: string, persist?: boolean }
+export type FHClientConfig = { selfUsernameChanges: boolean, registration: boolean }
+export type FHProtocols = { webdav: string | null, ftp: string | null }
