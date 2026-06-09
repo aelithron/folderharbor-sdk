@@ -16,6 +16,7 @@ export class AdminResource {
   }
   public logs = async (page?: number): Promise<FHLogs> => { return await this.#client.request<FHLogs>(`admin/logs${page ? `?page=${page}` : ""}`) }
   public permissions = async (): Promise<FHPermissions> => { return await this.#client.request<FHPermissions>("admin/permissions") }
+  public revokeSession = async (id: number) => { await this.#client.request(`/admin/sessions/${id}`, { method: "DELETE" }) }
 
   public users: UsersResource;
   public roles: RolesResource;
