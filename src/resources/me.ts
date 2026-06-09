@@ -1,4 +1,5 @@
 import type { FolderHarbor } from "..";
+import type { FHSession } from "../../sdk";
 
 export class MeResource {
   #client: FolderHarbor;
@@ -9,4 +10,3 @@ export class MeResource {
 
 export type FHSelfInfo = { id: number, username: string, sessions: FHSession[], activeSession: number, failedLoginLockout: boolean, permissions: string[] }
 export type FHSelfInfoEdit = { username?: string, password?: string, clearLoginAttempts?: boolean }
-type FHSession = { id: number, createdAt: Date, expiry: Date }
