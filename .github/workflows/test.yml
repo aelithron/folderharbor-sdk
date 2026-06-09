@@ -1,0 +1,30 @@
+name: Test/Lint
+
+on:
+  push:
+    branches: ["*"]
+  pull_request:
+    branches: ["*"]
+
+permissions:
+  pull-requests: read
+
+jobs:
+  test:
+    name: Test SDK
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: pnpm/action-setup@v5
+        with:
+          version: 11
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: "pnpm"
+          cache-dependency-path: "pnpm-lock.yaml"
+      - run: pnpm install --frozen-lockfile
+      - name: Lint/Check
+        run: |
+          pnpm lint
+          pnpm check-types
