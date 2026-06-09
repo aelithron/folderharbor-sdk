@@ -6,11 +6,17 @@ export class UsersResource {
   constructor(client: FolderHarbor) { this.#client = client; }
   public list = async (): Promise<FHUserList> => { return await this.#client.request<FHUserList>("admin/users"); }
   public get = async (id: number): Promise<FHFullUser | FHLimitedUser> => { return await this.#client.request<FHFullUser | FHLimitedUser>(`admin/users/${id}`); }
+  public edit = async (id: number) => { await this.#client.request(`admin/users/${id}`) }
+  public grant = async (id: number, body: FHGrantToUser) => { await this.#client.request(`admin/users/${id}/grant`, { method: "PATCH", body: JSON.stringify(body) }); }
+  public lock = async (id: number, body: FHLockUser) => { await this.#client.request(`admin/users/${id}/lock`, { method: "PATCH", body: JSON.stringify(body) }); }
   public create = async (body: FHCreateUser): Promise<{ id: number }> => { return await this.#client.request("admin/users", { method: "POST", body: JSON.stringify(body) }); }
-  public delete = async (id: number) => { return await this.#client.request(`admin/users/${id}`, { method: "DELETE" }); }
+  public delete = async (id: number) => { await this.#client.request(`admin/users/${id}`, { method: "DELETE" }); }
 }
 
 export type FHUserList = { id: number, username: string }[]
 export type FHFullUser = { access: "full", username: string, roles: number[], acls: number[], permissions: string[], failedLogins: number, locked: boolean, sessions: FHSession[] }
 export type FHLimitedUser = { access: "limited", username: string, failedLogins: number, locked: boolean }
+export type FHEditUser = { username?: string, password?: string, clearFailedLogins?: boolean }
+export type FHGrantToUser = ({ id: number, type: "role" | "acl", revoke: boolean } | { id: string, type: "permission", revoke: boolean })[]
+export type FHLockUser = { locked: boolean }
 export type FHCreateUser = { username: string, password: string }
