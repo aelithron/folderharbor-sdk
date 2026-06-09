@@ -4,7 +4,6 @@ export interface FolderHarborConfig {
 }
 export type FHSession = { id: number, createdAt: Date, expiry: Date }
 export type FHServerConfig = {
-  readonly database: string,
   api: {
     port: number,
     ssl: boolean,
