@@ -1,7 +1,7 @@
-import type { FolderHarborConfig } from "../sdk";
-import { FHConfigError, FHRequestError, FHUserError } from "./errors";
-import { MeResource } from "./resources/me";
-import { AdminResource } from "./resources/admin";
+import type { FolderHarborConfig } from "../sdk.js";
+import { FHConfigError, FHRequestError, FHAuthError } from "./errors.js";
+import { MeResource } from "./resources/me.js";
+import { AdminResource } from "./resources/admin/index.js";
 
 export class FolderHarbor {
   #server: string;
@@ -32,7 +32,7 @@ export class FolderHarbor {
         case "locked":
         case "invalid":
         case "expired":
-          throw new FHUserError(`Error from the server: ${(body as { error: string, message: string }).message}`, body.error as string);
+          throw new FHAuthError(`Error from the server: ${(body as { error: string, message: string }).message}`, body.error as string);
         default:
           throw new FHRequestError(`Error from the server: ${(body as { error: string, message: string }).message}`, body.error as string);
       }

@@ -1,8 +1,8 @@
-import { FolderHarbor } from "../..";
-import { ACLsResource } from "./acls";
-import { ConfigResource } from "./config";
-import { RolesResource } from "./roles";
-import { UsersResource } from "./users";
+import { FolderHarbor } from "../../index.js";
+import { ACLsResource } from "./acls.js";
+import { ConfigResource } from "./config.js";
+import { RolesResource } from "./roles.js";
+import { UsersResource } from "./users.js";
 
 export class AdminResource {
   #client: FolderHarbor;

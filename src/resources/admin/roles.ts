@@ -1,4 +1,4 @@
-import { FolderHarbor } from "../..";
+import { FolderHarbor } from "../../index.js";
 
 export class RolesResource {
   #client: FolderHarbor;

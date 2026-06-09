@@ -14,7 +14,7 @@ export class FHRequestError extends Error {
     Object.setPrototypeOf(this, FHConfigError.prototype);
   }
 }
-export class FHUserError extends FHRequestError {
+export class FHAuthError extends FHRequestError {
   constructor(message?: string, code?: string, options?: ErrorOptions) {
     super(message, code, options);
     this.name = this.constructor.name;
