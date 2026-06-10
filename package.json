@@ -7,19 +7,33 @@
     "build": "tsc",
     "lint": "eslint .",
     "check-types": "tsc --noEmit",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "NODE_OPTIONS='$NODE_OPTIONS --experimental-vm-modules' node_modules/jest/bin/jest.js"
   },
-  "keywords": ["sdk", "folderharbor", "ts", "typescript"],
+  "keywords": [
+    "sdk",
+    "folderharbor",
+    "ts",
+    "typescript"
+  ],
   "author": "Nova",
   "license": "MIT",
   "type": "module",
-  "files": ["dist/", "README.md", "LICENSE", "package.json"],
+  "files": [
+    "dist/",
+    "README.md",
+    "LICENSE",
+    "package.json"
+  ],
   "devDependencies": {
     "@eslint/js": "^10.0.1",
+    "@jest/globals": "^30.4.1",
+    "@types/jest": "^30.0.0",
     "@types/node": "^25.9.1",
     "eslint": "^10.4.1",
     "globals": "^17.6.0",
+    "jest": "^30.4.2",
     "jiti": "^2.7.0",
+    "ts-jest": "^29.4.11",
     "typescript-eslint": "^8.60.0"
   }
 }
