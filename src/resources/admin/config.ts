@@ -1,5 +1,4 @@
-import { FolderHarbor } from "../../index.js";
-import type { FHServerConfig } from "../../../sdk.ts";
+import { FolderHarbor, type FHServerConfig } from "../../index.js";
 
 export class ConfigResource {
   #client: FolderHarbor;

@@ -1,4 +1,3 @@
-import type { FolderHarborConfig } from "../sdk.js";
 import { FHConfigError, FHRequestError, FHAuthError } from "./errors.js";
 import { MeResource } from "./resources/me.js";
 import { AdminResource } from "./resources/admin/index.js";
@@ -65,3 +64,37 @@ export class FolderHarbor {
 export type FHLogin = { username: string, password: string, persist?: boolean }
 export type FHClientConfig = { selfUsernameChanges: boolean, registration: boolean }
 export type FHProtocols = { webdav: string | null, ftp: string | null }
+export interface FolderHarborConfig {
+  server: string;
+  token?: string | undefined;
+}
+export type FHSession = { id: number, createdAt: Date, expiry: Date }
+export type FHServerConfig = {
+  api: {
+    port: number,
+    ssl: boolean,
+    allowedOrigins: string[]
+  },
+  webdav: {
+    enabled: boolean,
+    port: number,
+    ssl: boolean,
+    publicAddress: string | null
+  },
+  ftp: {
+    enabled: boolean,
+    port: number,
+    ssl: boolean,
+    publicAddress: string | null,
+    pasv: { address: string | null, start: number, end: number }
+  },
+  failedLoginLimit: number,
+  registration: {
+    enabled: boolean,
+    readonly defaultRole: number | null
+  },
+  selfUsernameChanges: boolean,
+  filterMetadata: boolean,
+  readonly globalExclusions: string[],
+  readonly globalExclusionBypasses: string[]
+}

@@ -1,5 +1,4 @@
-import { FolderHarbor } from "../../index.js";
-import type { FHSession } from "../../../sdk.js";
+import { FolderHarbor, type FHSession } from "../../index.js";
 
 export class UsersResource {
   #client: FolderHarbor;
