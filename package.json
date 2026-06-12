@@ -1,6 +1,6 @@
 {
   "name": "@folderharbor/sdk",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "TypeScript SDK for FolderHarbor",
   "main": "dist/index.js",
   "repository": {
@@ -8,7 +8,9 @@
     "url": "git+https://github.com/folderharbor/ts-sdk"
   },
   "homepage": "https://fh.novatea.dev",
-  "bugs": { "url": "https://github.com/folderharbor/ts-sdk/issues" },
+  "bugs": {
+    "url": "https://github.com/folderharbor/ts-sdk/issues"
+  },
   "scripts": {
     "build": "tsc",
     "lint": "eslint .",
