@@ -41,5 +41,5 @@
     "moduleDetection": "force",
     "skipLibCheck": true,    
   },
-  "exclude": ["eslint.config.ts", "jest.config.ts", "jest.setup.ts", "dist/", "__tests__/", "mocks/"]
+  "exclude": ["eslint.config.ts", "jest.config.ts", "jest.setup.ts", "dist/", "__tests__/", "mocks/", "example.ts"]
 }
