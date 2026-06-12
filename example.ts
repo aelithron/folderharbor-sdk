@@ -1,12 +1,12 @@
-// this is an example of every method in the SDK! :3
+// this is an example of many methods in the SDK! :3
 import { FolderHarbor } from "./src/index.js";
 async function example() {
   const client = new FolderHarbor({ server: "https://demo.fh.novatea.dev" });
   const clientConfig = await client.clientconfig()
   if (!clientConfig.registration) throw new Error("Registration isn't enabled on the server, can't continue!");
   await client.auth.register({ username: "ts-sdk-tester", password: "mrrp" });
-  const info = await client.me.info();
-  console.log(`Registered user ${info.username} (ID #${info.id})`);
+  let info = await client.me.info();
+  console.log(`Registered user ${info.username} (ID #${info.id}) (Session ID #${info.activeSession}) (POST /auth/register)`);
   if (clientConfig.selfUsernameChanges) {
     await client.me.edit({ username: "ts-sdk-test", password: "mrow" });
     console.log("Changed own username and password! (PATCH /me)");
@@ -16,10 +16,23 @@ async function example() {
     console.log("Changed own password! (PATCH /me)");
   }
   await client.auth.login({ username: (clientConfig.selfUsernameChanges ? "ts-sdk-test" : "ts-sdk-tester"), password: "mrow" });
-  console.log("Logged back in (password changes sign you out)");
+  const tempSessionInfo = await client.me.info();
+  console.log(`Logged back in - session #${tempSessionInfo.activeSession} (password changes sign you out) (POST /auth)`);
+  await client.auth.login({ username: (clientConfig.selfUsernameChanges ? "ts-sdk-test" : "ts-sdk-tester"), password: "mrow" });
+  info = await client.me.info();
+  console.log(`Logged in again for a new session - session #${info.activeSession} (POST /auth)`);
+  await client.me.revokeSession({ sessionID: tempSessionInfo.activeSession });
+  console.log(`Signed out session #${tempSessionInfo.activeSession} (currently on session #${info.activeSession}) (DELETE /me/session)`);
+  const protocols = await client.protocols();
+  console.log(`Got protocol URLs - WebDAV: ${protocols.webdav || "Disabled"} | FTP: ${protocols.ftp || "Disabled"} (GET /protocols)`);
+  const permList = await client.admin.permissions();
+  console.log(`Got permission list! Random one: ${permList[Math.floor(Math.random() * permList.length)].id} (GET /admin/permissions)`);
+  const logs = await client.admin.logs();
+  console.log(`Got latest logs! Latest one: ${logs.logs[0].username} (ID #${logs.logs[0].userID}) ${logs.logs[0].blurb} (${logs.logs[0].action}) at ${new Date(logs.logs[0].createdAt).toISOString()}! (GET /admin/logs)`);
+
   if (info.permissions.includes("users:delete")) {
     await client.admin.users.delete(info.id);
-    console.log("Deleted own account, thanks for checking out the SDK! :3");
+    console.log(`Deleted own account (DELETE /admin/users/${info.id}), thanks for checking out the SDK! :3`);
   } else console.warn(`No permission to delete own account, you may want to delete it yourself (credentials are ${(clientConfig.selfUsernameChanges ? "ts-sdk-test" : "ts-sdk-tester")} / mrow).\nThanks for checking out the SDK! :3`);
 }
 example();
