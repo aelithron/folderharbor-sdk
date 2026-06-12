@@ -1,11 +1,13 @@
 import type { Config } from "jest";
-import { createDefaultPreset } from "ts-jest";
-const tsJestTransformCfg = createDefaultPreset().transform;
+import { createDefaultEsmPreset } from "ts-jest";
+const tsJestTransformCfg = createDefaultEsmPreset().transform;
 
 const config: Config = { 
-  preset: "ts-jest",
+  preset: "ts-jest/presets/default-esm",
   clearMocks: true,
   transform: { ...tsJestTransformCfg },
-  testEnvironment: "node"
+  moduleNameMapper: { "^(\\.{1,2}/.*)\\.js$": "$1" },
+  testEnvironment: "node",
+  setupFilesAfterEnv: ["./jest.setup.ts"]
 }
 export default config;
