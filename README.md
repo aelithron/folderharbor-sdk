@@ -2,7 +2,6 @@
 A fully-featured TypeScript SDK for [FolderHarbor](https://fh.novatea.dev)! \
 This was made for Hack Club [Macondo](https://macondo.hackclub.com/?ref=MYUG5) :3
 ## Installation
-(this is coming soon!)
 Run the correct command for your package manager:
 - NPM: `npm install @folderharbor/sdk`
 - Yarn: `yarn add @folderharbor/sdk`
