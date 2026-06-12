@@ -23,10 +23,11 @@ jobs:
           node-version: 24
           package-manager-cache: false
       - run: pnpm install --frozen-lockfile
-      - name: Lint/Check
+      - name: Lint/Check/Test
         run: |
           pnpm lint
           pnpm check-types
+          pnpm test
       - name: Build
         run: pnpm build
       - name: Stage Release

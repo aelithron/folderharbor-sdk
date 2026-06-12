@@ -11,13 +11,13 @@ export class FHRequestError extends Error {
     super(message, options);
     this.name = this.constructor.name;
     this.code = code;
-    Object.setPrototypeOf(this, FHConfigError.prototype);
+    Object.setPrototypeOf(this, FHRequestError.prototype);
   }
 }
 export class FHAuthError extends FHRequestError {
   constructor(message?: string, code?: string, options?: ErrorOptions) {
     super(message, code, options);
     this.name = this.constructor.name;
-    Object.setPrototypeOf(this, FHConfigError.prototype);
+    Object.setPrototypeOf(this, FHAuthError.prototype);
   }
 }

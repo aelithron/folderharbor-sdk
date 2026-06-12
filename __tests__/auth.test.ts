@@ -1,16 +1,25 @@
 import { expect, test } from "@jest/globals";
 import { FolderHarbor } from "../src/index.js"
 import { FHRequestError } from "../src/errors.js";
+
+const client = new FolderHarbor({ server: "http://mock-server.local" });
 test("checks valid login", async () => {
-  const client = new FolderHarbor({ server: "http://mock-server.local" });
-  const token = await client.auth.login({ username: "meow", password: "mrrp" });
+  const { token } = await client.auth.login({ username: "meow", password: "mrrp", persist: false });
   expect(token).toEqual("nya");
 });
 test("checks incorrect username", async () => {
-  const client = new FolderHarbor({ server: "http://mock-server.local" });
-  await expect(client.auth.login({ username: "mrow", password: "mrrp" })).toThrow(FHRequestError);
+  try {
+    await client.auth.login({ username: "mrow", password: "mrrp", persist: false });
+  } catch (e: unknown) {
+    expect(e).toBeInstanceOf(FHRequestError);
+    expect((e as FHRequestError).code).toEqual("username");
+  }
 });
 test("checks incorrect password", async () => {
-  const client = new FolderHarbor({ server: "http://mock-server.local" });
-  await expect(client.auth.login({ username: "meow", password: "mrow" })).rejects().toThrow(FHRequestError);
+  try {
+    await client.auth.login({ username: "meow", password: "mrow", persist: false });
+  } catch (e: unknown) {
+    expect(e).toBeInstanceOf(FHRequestError);
+    expect((e as FHRequestError).code).toEqual("password");
+  }
 });
