@@ -10,6 +10,8 @@ export class RolesResource {
    * Gets the list of roles and their IDs.
    * 
    * @returns A list of roles with their corresponding IDs
+   * @throws {FHAuthError} If your session is invalid, expired, or for a locked account
+   * @throws {FHRequestError} If anything else went wrong, either in the process of requesting, or in the response from the server
    */
   public list = async (): Promise<FHRoleList> => { return await this.#client.request<FHRoleList>("admin/roles"); }
   /**
@@ -17,6 +19,8 @@ export class RolesResource {
    * 
    * @param roleID - The role's ID
    * @returns The role's information/details
+   * @throws {FHAuthError} If your session is invalid, expired, or for a locked account
+   * @throws {FHRequestError} If anything else went wrong, either in the process of requesting, or in the response from the server
    */
   public get = async (roleID: number): Promise<FHRole> => { return await this.#client.request<FHRole>(`admin/roles/${roleID}`); }
   /**
@@ -27,6 +31,8 @@ export class RolesResource {
    * 
    * @param roleID - The role's ID
    * @param body - The parts of the role to alter
+   * @throws {FHAuthError} If your session is invalid, expired, or for a locked account
+   * @throws {FHRequestError} If anything else went wrong, either in the process of requesting, or in the response from the server
    */
   public edit = async (roleID: number, body: FHEditRole) => { await this.#client.request(`admin/roles/${roleID}`, { method: "PATCH", body: JSON.stringify(body) }); }
   /**
@@ -37,6 +43,8 @@ export class RolesResource {
    * 
    * @param roleID - The role's ID
    * @param body - An array of grantable objects using their IDs, types, and whether to grant or revoke the object
+   * @throws {FHAuthError} If your session is invalid, expired, or for a locked account
+   * @throws {FHRequestError} If anything else went wrong, either in the process of requesting, or in the response from the server
    */
   public grant = async (roleID: number, body: FHGrantToRole) => { await this.#client.request(`admin/roles/${roleID}/grant`, { method: "PATCH", body: JSON.stringify(body) }); }
   /**
@@ -44,12 +52,16 @@ export class RolesResource {
    * 
    * @param body - The name, and optionally ACLs and permissions, for the new role
    * @returns The new role's ID
+   * @throws {FHAuthError} If your session is invalid, expired, or for a locked account
+   * @throws {FHRequestError} If anything else went wrong, either in the process of requesting, or in the response from the server
    */
   public create = async (body: FHCreateRole): Promise<{ id: number }> => { return await this.#client.request("admin/roles", { method: "POST", body: JSON.stringify(body) }); }
   /**
    * Deletes a role.
    * 
    * @param roleID - The role's ID
+   * @throws {FHAuthError} If your session is invalid, expired, or for a locked account
+   * @throws {FHRequestError} If anything else went wrong, either in the process of requesting, or in the response from the server
    */
   public delete = async (roleID: number) => { await this.#client.request(`admin/roles/${roleID}`, { method: "DELETE" }); }
 }
