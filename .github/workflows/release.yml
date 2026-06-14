@@ -31,7 +31,7 @@ jobs:
       - name: Build
         run: pnpm build
       - name: Stage Release
-        run: pnpm stage publish --access public --provenance
+        run: pnpm stage publish --provenance --no-git-checks
       
   docs:
     name: Update Docs
