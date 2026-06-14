@@ -33,3 +33,13 @@ export class FHAuthError extends FHRequestError {
     Object.setPrototypeOf(this, FHAuthError.prototype);
   }
 }
+/**
+ * Error thrown when the authenticated user doesn't have permission to take the admin action that was attempted.
+ */
+export class FHPermissionError extends FHRequestError {
+  constructor(message?: string, code?: string, options?: ErrorOptions) {
+    super(message, code, options);
+    this.name = this.constructor.name;
+    Object.setPrototypeOf(this, FHAuthError.prototype);
+  }
+}

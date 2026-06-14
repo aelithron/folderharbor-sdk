@@ -10,7 +10,9 @@ export class ACLsResource {
    * Gets the list of ACLs and their IDs.
    * 
    * @returns A list of ACLs with their corresponding IDs
+   * @permission acls:list
    * @throws {FHAuthError} If your session is invalid, expired, or for a locked account
+   * @throws {FHPermissionError} If you don't have permission to take this admin action
    * @throws {FHRequestError} If anything else went wrong, either in the process of requesting, or in the response from the server
    */
   public list = async (): Promise<FHACLList> => { return await this.#client.request<FHACLList>("admin/acls"); }
@@ -19,7 +21,9 @@ export class ACLsResource {
    * 
    * @param aclID - The ACL's ID
    * @returns The ACL's information/details
+   * @permission acls:read
    * @throws {FHAuthError} If your session is invalid, expired, or for a locked account
+   * @throws {FHPermissionError} If you don't have permission to take this admin action
    * @throws {FHRequestError} If anything else went wrong, either in the process of requesting, or in the response from the server
    */
   public get = async (aclID: number): Promise<FHACL> => { return await this.#client.request<FHACL>(`admin/acls/${aclID}`); }
@@ -31,7 +35,9 @@ export class ACLsResource {
    * 
    * @param aclID - The ACL's ID
    * @param body - The parts of the ACL to alter
+   * @permission acls:edit
    * @throws {FHAuthError} If your session is invalid, expired, or for a locked account
+   * @throws {FHPermissionError} If you don't have permission to take this admin action
    * @throws {FHRequestError} If anything else went wrong, either in the process of requesting, or in the response from the server
    */
   public edit = async (aclID: number, body: FHEditACL) => { await this.#client.request(`admin/acls/${aclID}`, { method: "PATCH", body: JSON.stringify(body) }); }
@@ -43,7 +49,9 @@ export class ACLsResource {
    * 
    * @param aclID - The ACL's ID
    * @param body - The parts of the ACL to alter
+   * @permission acls:edit
    * @throws {FHAuthError} If your session is invalid, expired, or for a locked account
+   * @throws {FHPermissionError} If you don't have permission to take this admin action
    * @throws {FHRequestError} If anything else went wrong, either in the process of requesting, or in the response from the server
    */
   public editPaths = async (aclID: number, body: FHEditACLPaths) => { await this.#client.request(`admin/acls/${aclID}/paths`, { method: "PATCH", body: JSON.stringify(body) }); }
@@ -52,7 +60,9 @@ export class ACLsResource {
    * 
    * @param body - The name, and optionally allow and deny paths, for the new ACL
    * @returns The new ACL's ID
+   * @permission acls:create
    * @throws {FHAuthError} If your session is invalid, expired, or for a locked account
+   * @throws {FHPermissionError} If you don't have permission to take this admin action
    * @throws {FHRequestError} If anything else went wrong, either in the process of requesting, or in the response from the server
    */
   public create = async (body: FHCreateACL): Promise<{ aclID: number }> => { return await this.#client.request("admin/acls", { method: "POST", body: JSON.stringify(body) }); }
@@ -60,7 +70,9 @@ export class ACLsResource {
    * Deletes an ACL.
    * 
    * @param aclID - The ACL's ID
+   * @permission acls:delete
    * @throws {FHAuthError} If your session is invalid, expired, or for a locked account
+   * @throws {FHPermissionError} If you don't have permission to take this admin action
    * @throws {FHRequestError} If anything else went wrong, either in the process of requesting, or in the response from the server
    */
   public delete = async (aclID: number) => { await this.#client.request(`admin/acls/${aclID}`, { method: "DELETE" }); }

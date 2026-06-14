@@ -10,7 +10,9 @@ export class UsersResource {
    * Gets the list of users and their IDs.
    * 
    * @returns A list of users (with their usernames and IDs)
+   * @permission users:list
    * @throws {FHAuthError} If your session is invalid, expired, or for a locked account
+   * @throws {FHPermissionError} If you don't have permission to take this admin action
    * @throws {FHRequestError} If anything else went wrong, either in the process of requesting, or in the response from the server
    */
   public list = async (): Promise<FHUserList> => { return await this.#client.request<FHUserList>("admin/users"); }
@@ -19,7 +21,9 @@ export class UsersResource {
    * 
    * @param userID - The user's ID
    * @returns The user's information, either full or limited depending on your permission level
+   * @permission users:read || users:read.full
    * @throws {FHAuthError} If your session is invalid, expired, or for a locked account
+   * @throws {FHPermissionError} If you don't have permission to take this admin action
    * @throws {FHRequestError} If anything else went wrong, either in the process of requesting, or in the response from the server
    */
   public get = async (userID: number): Promise<FHFullUser | FHLimitedUser> => { return await this.#client.request<FHFullUser | FHLimitedUser>(`admin/users/${userID}`); }
@@ -29,7 +33,9 @@ export class UsersResource {
    * 
    * @param userID - The user's ID
    * @param body - The information to change / updates to make
+   * @permission users:edit
    * @throws {FHAuthError} If your session is invalid, expired, or for a locked account
+   * @throws {FHPermissionError} If you don't have permission to take this admin action
    * @throws {FHRequestError} If anything else went wrong, either in the process of requesting, or in the response from the server
    */
   public edit = async (userID: number, body: FHEditUser) => { await this.#client.request(`admin/users/${userID}`, { method: "PATCH", body: JSON.stringify(body) }); }
@@ -41,7 +47,9 @@ export class UsersResource {
    * 
    * @param userID - The user's ID
    * @param body - An array of grantable objects using their IDs, types, and whether to grant or revoke the object
+   * @permission users:grant
    * @throws {FHAuthError} If your session is invalid, expired, or for a locked account
+   * @throws {FHPermissionError} If you don't have permission to take this admin action
    * @throws {FHRequestError} If anything else went wrong, either in the process of requesting, or in the response from the server
    */
   public grant = async (userID: number, body: FHGrantToUser) => { await this.#client.request(`admin/users/${userID}/grant`, { method: "PATCH", body: JSON.stringify(body) }); }
@@ -53,7 +61,9 @@ export class UsersResource {
    * 
    * @param userID - The user's ID
    * @param body - Arrays of the role, ACL, and permission IDs to apply to the user
+   * @permission users:grant
    * @throws {FHAuthError} If your session is invalid, expired, or for a locked account
+   * @throws {FHPermissionError} If you don't have permission to take this admin action
    * @throws {FHRequestError} If anything else went wrong, either in the process of requesting, or in the response from the server
    */
   public editGrants = async (userID: number, body: FHUserEditGrants) => { await this.#client.request(`admin/users/${userID}/grant`, { method: "PUT", body: JSON.stringify(body) }); }
@@ -62,7 +72,9 @@ export class UsersResource {
    * 
    * @param userID - The user's ID
    * @param lock - Whether to lock or unlock the account (true = locked, false = unlocked)
+   * @permission users:lock
    * @throws {FHAuthError} If your session is invalid, expired, or for a locked account
+   * @throws {FHPermissionError} If you don't have permission to take this admin action
    * @throws {FHRequestError} If anything else went wrong, either in the process of requesting, or in the response from the server
    */
   public lock = async (userID: number, lock: boolean) => { await this.#client.request(`admin/users/${userID}/lock`, { method: "PATCH", body: JSON.stringify({ locked: lock }) }); }
@@ -71,7 +83,9 @@ export class UsersResource {
    * 
    * @param body - The username and password to use for the new user
    * @returns The new user's ID
+   * @permission users:create
    * @throws {FHAuthError} If your session is invalid, expired, or for a locked account
+   * @throws {FHPermissionError} If you don't have permission to take this admin action
    * @throws {FHRequestError} If anything else went wrong, either in the process of requesting, or in the response from the server
    */
   public create = async (body: FHCreateUser): Promise<{ id: number }> => { return await this.#client.request("admin/users", { method: "POST", body: JSON.stringify(body) }); }
@@ -79,7 +93,9 @@ export class UsersResource {
    * Deletes a user.
    * 
    * @param userID - The user's ID
+   * @permission users:delete
    * @throws {FHAuthError} If your session is invalid, expired, or for a locked account
+   * @throws {FHPermissionError} If you don't have permission to take this admin action
    * @throws {FHRequestError} If anything else went wrong, either in the process of requesting, or in the response from the server
    */
   public delete = async (userID: number) => { await this.#client.request(`admin/users/${userID}`, { method: "DELETE" }); }

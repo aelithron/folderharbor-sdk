@@ -22,7 +22,9 @@ export class AdminResource {
    * 
    * @param page - Page number to look at, defaults to page 1 (the latest logs)
    * @returns The log entries on that page (capping out at 20), as well as the total number of pages
+   * @permission logs:read
    * @throws {FHAuthError} If your session is invalid, expired, or for a locked account
+   * @throws {FHPermissionError} If you don't have permission to take this admin action
    * @throws {FHRequestError} If anything else went wrong, either in the process of requesting, or in the response from the server
    */
   public logs = async (page?: number): Promise<FHLogs> => { return await this.#client.request<FHLogs>(`admin/logs${page ? `?page=${page}` : ""}`) }
@@ -38,7 +40,9 @@ export class AdminResource {
    * Revokes a session token for any user.
    * 
    * @param sessionID - The session ID for the session you want to revoke
+   * @permission users:edit
    * @throws {FHAuthError} If your session is invalid, expired, or for a locked account
+   * @throws {FHPermissionError} If you don't have permission to take this admin action
    * @throws {FHRequestError} If anything else went wrong, either in the process of requesting, or in the response from the server
    */
   public revokeSession = async (sessionID: number) => { await this.#client.request(`/admin/sessions/${sessionID}`, { method: "DELETE" }) }

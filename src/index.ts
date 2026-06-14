@@ -1,4 +1,4 @@
-import { FHConfigError, FHRequestError, FHAuthError } from "./errors.js";
+import { FHConfigError, FHRequestError, FHAuthError, FHPermissionError } from "./errors.js";
 import { MeResource } from "./resources/me.js";
 import { AdminResource } from "./resources/admin/index.js";
 
@@ -35,6 +35,7 @@ export class FolderHarbor {
    * @param init - A request body, this uses the same syntax as the Fetch API
    * @returns The object returned from the API, matching the type that was used in the call
    * @throws {FHAuthError} If your session is invalid, expired, or for a locked account
+   * @throws {FHPermissionError} If you don't have permission to take a given admin action
    * @throws {FHRequestError} If anything else went wrong, either in the process of requesting, or in the response from the server
    */
   async request<T>(path: string, init?: RequestInit): Promise<T> {
@@ -56,6 +57,8 @@ export class FolderHarbor {
         case "invalid":
         case "expired":
           throw new FHAuthError(`Error from the server: ${(body as { error: string, message: string }).message}`, body.error as string);
+        case "forbidden":
+          throw new FHPermissionError(`Error from the server: ${(body as { error: string, message: string }).message}`, body.error as string);
         default:
           throw new FHRequestError(`Error from the server: ${(body as { error: string, message: string }).message}`, body.error as string);
       }
