@@ -14,6 +14,10 @@ export class ConfigResource {
    * @throws {FHAuthError} If your session is invalid, expired, or for a locked account
    * @throws {FHPermissionError} If you don't have permission to take this admin action
    * @throws {FHRequestError} If anything else went wrong, either in the process of requesting, or in the response from the server
+   * @example
+   * ```ts
+   * const config = await client.admin.config.read();
+   * ```
    */
   public read = async (): Promise<FHServerConfig> => { return await this.#client.request<FHServerConfig>(`admin/config`); }
   /**
@@ -24,6 +28,16 @@ export class ConfigResource {
    * @throws {FHAuthError} If your session is invalid, expired, or for a locked account
    * @throws {FHPermissionError} If you don't have permission to take this admin action
    * @throws {FHRequestError} If anything else went wrong, either in the process of requesting, or in the response from the server
+   * @example
+   * ```ts
+   * await client.admin.config.edit({ 
+   *   ftp: { 
+   *     enabled: true,
+   *     ssl: true
+   *   },
+   *   failedLoginLimit: 5
+   * });
+   * ```
    */
   public edit = async (body: Partial<FHServerConfig>) => { await this.#client.request(`admin/config`, { method: "PATCH", body: JSON.stringify(body) }); }
 }
