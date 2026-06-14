@@ -12,6 +12,10 @@ export class MeResource {
    * @returns Information about the logged in user
    * @throws {FHAuthError} If your session is invalid, expired, or for a locked account
    * @throws {FHRequestError} If anything else went wrong, either in the process of requesting, or in the response from the server
+   * @example
+   * ```ts
+   * const info = await client.me.info();
+   * ```
    */
   public info = async (): Promise<FHSelfInfo> => { return await this.#client.request<FHSelfInfo>("me"); }
   /**
@@ -20,6 +24,10 @@ export class MeResource {
    * @param body - The information you want to change / updates you want to make
    * @throws {FHAuthError} If your session is invalid, expired, or for a locked account
    * @throws {FHRequestError} If anything else went wrong, either in the process of requesting, or in the response from the server
+   * @example
+   * ```ts
+   * await client.me.edit({ username: "meow", password: "mrrp", clearLoginAttempts: true });
+   * ```
    */
   public edit = async (body: FHSelfInfoEdit) => { await this.#client.request("me", { method: "PATCH", body: JSON.stringify(body) }); }
   /**
@@ -28,8 +36,12 @@ export class MeResource {
    * @param sessionID - The session ID for the session you want to revoke
    * @throws {FHAuthError} If your session is invalid, expired, or for a locked account
    * @throws {FHRequestError} If anything else went wrong, either in the process of requesting, or in the response from the server
+   * @example
+   * ```ts
+   * await client.me.revokeSession(6);
+   * ```
    */
-  public revokeSession =  async (sessionID: number) => { await this.#client.request(`me/session`, { method: "DELETE", body: JSON.stringify({ sessionID }) }); }
+  public revokeSession = async (sessionID: number) => { await this.#client.request(`me/session`, { method: "DELETE", body: JSON.stringify({ sessionID }) }); }
 }
 
 export type FHSelfInfo = { id: number, username: string, sessions: FHSession[], activeSession: number, failedLoginLockout: boolean, permissions: string[] }

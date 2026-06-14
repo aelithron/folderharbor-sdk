@@ -1,6 +1,11 @@
 # FolderHarbor TypeScript SDK
 A fully-featured TypeScript SDK for [FolderHarbor](https://fh.novatea.dev)! \
 This was made for Hack Club [Macondo](https://macondo.hackclub.com/?ref=MYUG5) :3
+
+<a href="https://notbyai.fyi" target="_blank">
+  <img src="not-by-ai.svg" alt="Developed by a human, not by AI!">
+</a>
+
 ## Installation
 Run the correct command for your package manager:
 - NPM: `npm install @folderharbor/sdk`
@@ -8,8 +13,10 @@ Run the correct command for your package manager:
 - PNPM: `pnpm add @folderharbor/sdk`
 - Bun: `bun install @folderharbor/sdk`
 ## Usage
+**Docs:** https://folderharbor.github.io/ts-sdk
+
 To use this SDK in your own code, you need a running [FolderHarbor Server](https://fh.novatea.dev/server). \
-(if you're just playing around, you can use the official demo, `https://demo.fh.novatea.dev`!)
+(if you're just playing around, you can use the official demo, `https://demo.fh.novatea.dev`)
 
 Once you have one, you can follow either of these starting structures!
 ### With Username/Password

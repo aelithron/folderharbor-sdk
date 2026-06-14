@@ -29,7 +29,7 @@ async function example() {
   await client.auth.login({ username, password: "mrow" });
   info = await client.me.info();
   console.log(`Logged in again for a new session - session #${info.activeSession} (POST /auth)`);
-  await client.me.revokeSession({ sessionID: tempSessionInfo.activeSession });
+  await client.me.revokeSession(tempSessionInfo.activeSession);
   console.log(`Signed out session #${tempSessionInfo.activeSession} (currently on session #${info.activeSession}) (DELETE /me/session)`);
   const protocols = await client.protocols();
   console.log(`Got protocol URLs - WebDAV: ${protocols.webdav || "Disabled"} | FTP: ${protocols.ftp || "Disabled"} (GET /protocols)`);

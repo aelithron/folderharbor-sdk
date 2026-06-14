@@ -26,6 +26,11 @@ export class AdminResource {
    * @throws {FHAuthError} If your session is invalid, expired, or for a locked account
    * @throws {FHPermissionError} If you don't have permission to take this admin action
    * @throws {FHRequestError} If anything else went wrong, either in the process of requesting, or in the response from the server
+   * @example
+   * ```ts
+   * const latestLogs = await client.admin.logs();
+   * const oldestLogs = await client.admin.logs(latestLogs.pageCount);
+   * ```
    */
   public logs = async (page?: number): Promise<FHLogs> => { return await this.#client.request<FHLogs>(`admin/logs${page ? `?page=${page}` : ""}`) }
   /**
@@ -34,6 +39,10 @@ export class AdminResource {
    * @returns A list of key-value pairs with permission nodes and their descriptions
    * @throws {FHAuthError} If your session is invalid, expired, or for a locked account
    * @throws {FHRequestError} If anything else went wrong, either in the process of requesting, or in the response from the server
+   * @example
+   * ```ts
+   * const permList = await client.admin.permissions();
+   * ```
    */
   public permissions = async (): Promise<FHPermissions> => { return await this.#client.request<FHPermissions>("admin/permissions") }
   /**
@@ -44,6 +53,10 @@ export class AdminResource {
    * @throws {FHAuthError} If your session is invalid, expired, or for a locked account
    * @throws {FHPermissionError} If you don't have permission to take this admin action
    * @throws {FHRequestError} If anything else went wrong, either in the process of requesting, or in the response from the server
+   * @example
+   * ```ts
+   * await client.admin.revokeSession(6);
+   * ```
    */
   public revokeSession = async (sessionID: number) => { await this.#client.request(`/admin/sessions/${sessionID}`, { method: "DELETE" }) }
 

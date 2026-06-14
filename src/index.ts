@@ -5,11 +5,11 @@ import { AdminResource } from "./resources/admin/index.js";
 /**
  * Core SDK for FolderHarbor's API!
  * 
- * @example
+* @example
  * ```ts
  * // no auth token
  * const client = new FolderHarbor({ server: "https://demo.fh.novatea.dev" });
- * ```
+ * ``` 
  * @example
  * ```ts
  * // with auth token
@@ -24,7 +24,7 @@ export class FolderHarbor {
     if (!config.server) throw new FHConfigError("Invalid server address");
     this.#server = config.server;
     if (config.token) this.#token = config.token;
-    
+
     this.me = new MeResource(this);
     this.admin = new AdminResource(this);
   }
@@ -37,6 +37,10 @@ export class FolderHarbor {
    * @throws {FHAuthError} If your session is invalid, expired, or for a locked account
    * @throws {FHPermissionError} If you don't have permission to take a given admin action
    * @throws {FHRequestError} If anything else went wrong, either in the process of requesting, or in the response from the server
+   * @example
+   * ```ts
+   * const body = await client.request<{ token: string }>("auth", { method: "POST", body: JSON.stringify({ username: "test", password: "example" }) });
+   * ```
    */
   async request<T>(path: string, init?: RequestInit): Promise<T> {
     let body: object | undefined;
@@ -52,7 +56,7 @@ export class FolderHarbor {
       if (res.status !== 204) body = await res.json() as object;
     } catch (e) { throw new FHRequestError("Error while fetching from the server", undefined, { cause: e }) }
     if (body && "error" in body) {
-      switch(body.error) {
+      switch (body.error) {
         case "locked":
         case "invalid":
         case "expired":
@@ -76,6 +80,10 @@ export class FolderHarbor {
      * @param body - Login credentials, as well as an option to `persist` the token in the client and use it for future requests (defaults to true)
      * @returns The token that the API responds with
      * @throws {FHRequestError} If anything went wrong, either in the process of requesting, or in the response from the server
+     * @example
+     * ```ts
+     * const { token } = await client.auth.login({ username: "test", password: "meow", persist: false });
+     * ```
      */
     login: async (body: FHLogin): Promise<{ token: string }> => {
       const res = await this.request<{ token: string }>("auth", { method: "POST", body: JSON.stringify({ username: body.username, password: body.password }) });
@@ -87,6 +95,10 @@ export class FolderHarbor {
      * 
      * @throws {FHAuthError} If your session is invalid, expired, or for a locked account
      * @throws {FHRequestError} If anything else went wrong, either in the process of requesting, or in the response from the server
+     * @example
+     * ```ts
+     * await client.auth.logout();
+     * ```
      */
     logout: async () => {
       await this.request("auth", { method: "DELETE" });
@@ -99,6 +111,10 @@ export class FolderHarbor {
      * @param body - Login credentials, as well as an option to `persist` the token in the client and use it for future requests (defaults to true)
      * @returns The token that the API responds with
      * @throws {FHRequestError} If anything went wrong, either in the process of requesting, or in the response from the server
+     * @example
+     * ```ts
+     * const { id } = await client.auth.register({ username: "mrrp", password: "example123", persist: true });
+     * ```
      */
     register: async (body: FHLogin): Promise<{ token: string }> => {
       const res = await this.request<{ token: string }>("auth/register", { method: "POST", body: JSON.stringify({ username: body.username, password: body.password }) });
@@ -111,6 +127,10 @@ export class FolderHarbor {
    * 
    * @returns The "client configuration" from the server
    * @throws {FHRequestError} If anything went wrong, either in the process of requesting, or in the response from the server
+   * @example
+   * ```ts
+   * const info = await client.clientconfig();
+   * ```
    */
   public clientconfig = async (): Promise<FHClientConfig> => { return await this.request<FHClientConfig>("clientconfig"); }
   /**
@@ -119,6 +139,10 @@ export class FolderHarbor {
    * @returns The connection URLs for any enabled protocols, and null for disabled ones
    * @throws {FHAuthError} If your session is invalid, expired, or for a locked account
    * @throws {FHRequestError} If anything went wrong, either in the process of requesting, or in the response from the server
+   * @example
+   * ```ts
+   * const urls = await client.protocols();
+   * ```
    */
   public protocols = async (): Promise<FHProtocols> => { return await this.request<FHProtocols>("protocols"); }
   public me: MeResource;
