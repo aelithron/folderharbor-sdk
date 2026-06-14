@@ -14,6 +14,10 @@ export class RolesResource {
    * @throws {FHAuthError} If your session is invalid, expired, or for a locked account
    * @throws {FHPermissionError} If you don't have permission to take this admin action
    * @throws {FHRequestError} If anything else went wrong, either in the process of requesting, or in the response from the server
+   * @example
+   * ```ts
+   * const roles = await client.admin.roles.list();
+   * ```
    */
   public list = async (): Promise<FHRoleList> => { return await this.#client.request<FHRoleList>("admin/roles"); }
   /**
@@ -25,6 +29,10 @@ export class RolesResource {
    * @throws {FHAuthError} If your session is invalid, expired, or for a locked account
    * @throws {FHPermissionError} If you don't have permission to take this admin action
    * @throws {FHRequestError} If anything else went wrong, either in the process of requesting, or in the response from the server
+   * @example
+   * ```ts
+   * const role = await client.admin.roles.get(1);
+   * ```
    */
   public get = async (roleID: number): Promise<FHRole> => { return await this.#client.request<FHRole>(`admin/roles/${roleID}`); }
   /**
@@ -39,6 +47,10 @@ export class RolesResource {
    * @throws {FHAuthError} If your session is invalid, expired, or for a locked account
    * @throws {FHPermissionError} If you don't have permission to take this admin action
    * @throws {FHRequestError} If anything else went wrong, either in the process of requesting, or in the response from the server
+   * @example
+   * ```ts
+   * await client.admin.roles.edit(2, { name: "auditor", permissions: ["logs:read"], acls: [1] });
+   * ```
    */
   public edit = async (roleID: number, body: FHEditRole) => { await this.#client.request(`admin/roles/${roleID}`, { method: "PATCH", body: JSON.stringify(body) }); }
   /**
@@ -53,6 +65,14 @@ export class RolesResource {
    * @throws {FHAuthError} If your session is invalid, expired, or for a locked account
    * @throws {FHPermissionError} If you don't have permission to take this admin action
    * @throws {FHRequestError} If anything else went wrong, either in the process of requesting, or in the response from the server
+   * @example
+   * ```ts
+   * const grants: FHGrantToRole = [
+   *  { id: 2, type: "acl", revoke: false },
+   *  { id: "config:write", type: "permission", revoke: true }
+   * ];
+   * await client.admin.roles.grant(2, grants);
+   * ```
    */
   public grant = async (roleID: number, body: FHGrantToRole) => { await this.#client.request(`admin/roles/${roleID}/grant`, { method: "PATCH", body: JSON.stringify(body) }); }
   /**
@@ -64,6 +84,10 @@ export class RolesResource {
    * @throws {FHAuthError} If your session is invalid, expired, or for a locked account
    * @throws {FHPermissionError} If you don't have permission to take this admin action
    * @throws {FHRequestError} If anything else went wrong, either in the process of requesting, or in the response from the server
+   * @example
+   * ```ts
+   * const { id } = await client.admin.roles.create({ name: "testing", acls: [2, 3], permissions: ["logs:read", "config:read"] });
+   * ```
    */
   public create = async (body: FHCreateRole): Promise<{ id: number }> => { return await this.#client.request("admin/roles", { method: "POST", body: JSON.stringify(body) }); }
   /**
@@ -74,6 +98,10 @@ export class RolesResource {
    * @throws {FHAuthError} If your session is invalid, expired, or for a locked account
    * @throws {FHPermissionError} If you don't have permission to take this admin action
    * @throws {FHRequestError} If anything else went wrong, either in the process of requesting, or in the response from the server
+   * @example
+   * ```ts
+   * await client.admin.roles.delete(2);
+   * ```
    */
   public delete = async (roleID: number) => { await this.#client.request(`admin/roles/${roleID}`, { method: "DELETE" }); }
 }

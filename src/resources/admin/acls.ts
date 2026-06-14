@@ -13,7 +13,11 @@ export class ACLsResource {
    * @permission acls:list
    * @throws {FHAuthError} If your session is invalid, expired, or for a locked account
    * @throws {FHPermissionError} If you don't have permission to take this admin action
-   * @throws {FHRequestError} If anything else went wrong, either in the process of requesting, or in the response from the server
+   * @throws {FHRequestError} If anything else went wrong, either in the process of requesting, or in the response from the 
+   * @example
+   * ```ts
+   * const acls = await client.admin.acls.list();
+   * ```
    */
   public list = async (): Promise<FHACLList> => { return await this.#client.request<FHACLList>("admin/acls"); }
   /**
@@ -25,6 +29,10 @@ export class ACLsResource {
    * @throws {FHAuthError} If your session is invalid, expired, or for a locked account
    * @throws {FHPermissionError} If you don't have permission to take this admin action
    * @throws {FHRequestError} If anything else went wrong, either in the process of requesting, or in the response from the server
+   * @example
+   * ```ts
+   * const acl = await client.admin.acls.get(1);
+   * ```
    */
   public get = async (aclID: number): Promise<FHACL> => { return await this.#client.request<FHACL>(`admin/acls/${aclID}`); }
   /**
@@ -39,6 +47,10 @@ export class ACLsResource {
    * @throws {FHAuthError} If your session is invalid, expired, or for a locked account
    * @throws {FHPermissionError} If you don't have permission to take this admin action
    * @throws {FHRequestError} If anything else went wrong, either in the process of requesting, or in the response from the server
+   * @example
+   * ```ts
+   * await client.admin.acls.edit(2, { name: "test", allow: ["/home/test/**"], deny: ["/home/test/private/**", "/home/test/.aws/**"] });
+   * ```
    */
   public edit = async (aclID: number, body: FHEditACL) => { await this.#client.request(`admin/acls/${aclID}`, { method: "PATCH", body: JSON.stringify(body) }); }
   /**
@@ -53,6 +65,15 @@ export class ACLsResource {
    * @throws {FHAuthError} If your session is invalid, expired, or for a locked account
    * @throws {FHPermissionError} If you don't have permission to take this admin action
    * @throws {FHRequestError} If anything else went wrong, either in the process of requesting, or in the response from the server
+   * @example
+   * ```ts
+   * const paths: FHEditACLPaths = [
+   *   { path: "/home/admin/**", type: "allow", delete: true },
+   *   { path: "/home/admin/Documents/**", type: "allow", delete: false },
+   *   { path: "/home/admin/Documents/report.pdf", type: "deny", delete: false }
+   * ];
+   * await client.admin.acls.editPaths(2, paths);
+   * ```
    */
   public editPaths = async (aclID: number, body: FHEditACLPaths) => { await this.#client.request(`admin/acls/${aclID}/paths`, { method: "PATCH", body: JSON.stringify(body) }); }
   /**
@@ -64,6 +85,10 @@ export class ACLsResource {
    * @throws {FHAuthError} If your session is invalid, expired, or for a locked account
    * @throws {FHPermissionError} If you don't have permission to take this admin action
    * @throws {FHRequestError} If anything else went wrong, either in the process of requesting, or in the response from the server
+   * @example
+   * ```ts
+   * const { id } = await client.admin.acls.create({ name: "media", allow: ["/srv/tv/**", "/srv/music/**"], deny: ["/srv/music/explicit/**"] });
+   * ```
    */
   public create = async (body: FHCreateACL): Promise<{ aclID: number }> => { return await this.#client.request("admin/acls", { method: "POST", body: JSON.stringify(body) }); }
   /**
@@ -74,6 +99,10 @@ export class ACLsResource {
    * @throws {FHAuthError} If your session is invalid, expired, or for a locked account
    * @throws {FHPermissionError} If you don't have permission to take this admin action
    * @throws {FHRequestError} If anything else went wrong, either in the process of requesting, or in the response from the server
+   * @example
+   * ```ts
+   * await client.admin.acls.delete(2);
+   * ```
    */
   public delete = async (aclID: number) => { await this.#client.request(`admin/acls/${aclID}`, { method: "DELETE" }); }
 }
