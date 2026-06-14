@@ -29,4 +29,5 @@ const client = new FolderHarbor({ server: "[your server address]", token: "[your
 - Full TypeScript types for methods
 - Full JSDoc coverage for methods
 - Proper error handling (with custom errors like `FHRequestError` and `FHAuthError`)
+- Automated unit test coverage
 - Official way to interact with FolderHarbor servers!

@@ -1,0 +1,6 @@
+{
+  "entryPoints": ["src/"],
+  "entryPointStrategy": "expand",
+  "theme": "fresh",
+  "plugin": ["typedoc-theme-fresh"]
+}

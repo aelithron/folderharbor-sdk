@@ -39,7 +39,9 @@
     "isolatedModules": true,
     "noUncheckedSideEffectImports": true,
     "moduleDetection": "force",
-    "skipLibCheck": true,    
+    "skipLibCheck": true,
+
+    "ignoreDeprecations": "6.0"
   },
   "exclude": ["eslint.config.ts", "jest.config.ts", "jest.setup.ts", "dist/", "__tests__/", "mocks/", "example.ts"]
 }
