@@ -42,5 +42,6 @@ I heavily suggest reading the example and documentation attached to each method 
 - Official way to interact with FolderHarbor servers!
 ## Versioning
 The SDK version should always remain 1:1 with the version of [FolderHarbor Server](https://fh.novatea.dev/server) that it is intended to interact with.
-However, if I need to push urgent SDK changes without updating the server, I may add `-fix` to the end of the version number.
+However, if I need to push urgent SDK changes without updating the server, I will update the patch version (the last number).
+In other words, v1.1.1 SDK is still compatible with v1.1.0 server, but v1.1.1 SDK may not be compatible with v1.2.0 server (or vice versa).
 I will communicate this if I do it, in the `CHANGELOG.md` and/or on https://fh.novatea.dev.
