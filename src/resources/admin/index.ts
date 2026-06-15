@@ -58,7 +58,7 @@ export class AdminResource {
    * await client.admin.revokeSession(6);
    * ```
    */
-  public revokeSession = async (sessionID: number) => { await this.#client.request(`/admin/sessions/${sessionID}`, { method: "DELETE" }) }
+  public revokeSession = async (sessionID: number) => { await this.#client.request(`admin/sessions/${sessionID}`, { method: "DELETE" }) }
 
   public users: UsersResource;
   public roles: RolesResource;

@@ -142,7 +142,7 @@ export class UsersResource {
 export type FHUserList = { id: number, username: string }[]
 export type FHFullUser = { access: "full", username: string, roles: number[], acls: number[], permissions: string[], failedLogins: number, locked: boolean, sessions: FHSession[] }
 export type FHLimitedUser = { access: "limited", username: string, failedLogins: number, locked: boolean }
-export type FHEditUser = { username?: string, password?: string, clearFailedLogins?: boolean }
+export type FHEditUser = { username?: string, password?: string, clearLoginAttempts?: boolean }
 export type FHGrantToUser = ({ id: number, type: "role" | "acl", revoke: boolean } | { id: string, type: "permission", revoke: boolean })[]
 export type FHUserEditGrants = { roles?: number[], acls?: number[], permissions?: string[] }
 export type FHCreateUser = { username: string, password: string }
