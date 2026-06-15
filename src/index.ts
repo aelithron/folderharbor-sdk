@@ -5,6 +5,8 @@ import { AdminResource } from "./resources/admin/index.js";
 /**
  * Core SDK for FolderHarbor's API!
  * 
+ * Full docs: https://folderharbor.github.io/ts-sdk
+ * 
 * @example
  * ```ts
  * // no auth token
@@ -187,4 +189,5 @@ export type FHServerConfig = {
   readonly globalExclusions: string[],
   readonly globalExclusionBypasses: string[]
 }
+
 export * from "./typebarrel.js";

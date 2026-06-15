@@ -1,4 +1,5 @@
 // this is an example of many methods in the SDK! :3
+// for more info, as well as what they do, check out https://folderharbor.github.io/ts-sdk
 import { FolderHarbor } from "./src/index.js";
 async function example() {
   const client = new FolderHarbor({ server: "https://demo.fh.novatea.dev" });

@@ -1,5 +1,5 @@
 # FolderHarbor TypeScript SDK
-A fully-featured TypeScript SDK for [FolderHarbor](https://fh.novatea.dev)! \
+A fully-featured, strongly-typed TypeScript SDK for [FolderHarbor](https://fh.novatea.dev) with documentation and tests! \
 This was made for Hack Club [Macondo](https://macondo.hackclub.com/?ref=MYUG5) :3
 
 <a href="https://notbyai.fyi" target="_blank">
@@ -45,3 +45,7 @@ The SDK version should always remain 1:1 with the version of [FolderHarbor Serve
 However, if I need to push urgent SDK changes without updating the server, I will update the patch version (the last number).
 In other words, v1.1.1 SDK is still compatible with v1.1.0 server, but v1.1.1 SDK may not be compatible with v1.2.0 server (or vice versa).
 I will communicate this if I do it, in the `CHANGELOG.md` and/or on https://fh.novatea.dev.
+## Implementations
+The official FolderHarbor [Web Panel](https://fh.novatea.dev/web) implements the SDK! You can see its source code [here](https://github.com/aelithron/folderharbor/tree/main/web). \
+Also, you can see an example implementation of some functions in [`example.ts`](https://github.com/folderharbor/ts-sdk/blob/main/example.ts)! \
+Finally (though this was mentioned above), methods have examples in their annotations! You can see them in [the docs](https://folderharbor.github.io/ts-sdk), or with your code editor's IntelliSense (just hover over a method from the SDK).
