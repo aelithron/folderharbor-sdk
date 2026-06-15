@@ -78,17 +78,17 @@ export class FolderHarbor {
      * Logs in to a FolderHarbor server using user credentials.
      * 
      * @param body - Login credentials, as well as an option to `persist` the token in the client and use it for future requests (defaults to true)
-     * @returns The token that the API responds with
+     * @returns The session token, the user's ID, and their effective permissions.
      * @throws {FHRequestError} If anything went wrong, either in the process of requesting, or in the response from the server
      * @example
      * ```ts
-     * const { token } = await client.auth.login({ username: "test", password: "meow", persist: false });
+     * const session = await client.auth.login({ username: "test", password: "meow", persist: false });
      * ```
      */
-    login: async (body: FHLogin): Promise<{ token: string }> => {
-      const res = await this.request<{ token: string }>("auth", { method: "POST", body: JSON.stringify({ username: body.username, password: body.password }) });
+    login: async (body: FHLogin): Promise<FHLoginRes> => {
+      const res = await this.request<FHLoginRes>("auth", { method: "POST", body: JSON.stringify({ username: body.username, password: body.password }) });
       if (body.persist !== false) this.#token = res.token;
-      return { token: res.token };
+      return res;
     },
     /**
      * Logs out and invalidates the session token.
@@ -109,17 +109,17 @@ export class FolderHarbor {
      * Note that this will error if the server doesn't have registration enabled! I recommend calling `FolderHarbor#clientconfig()` and checking that registration is enabled.
      * 
      * @param body - Login credentials, as well as an option to `persist` the token in the client and use it for future requests (defaults to true)
-     * @returns The token that the API responds with
+     * @returns The new user's session token, user ID, and effective permissions.
      * @throws {FHRequestError} If anything went wrong, either in the process of requesting, or in the response from the server
      * @example
      * ```ts
-     * const { id } = await client.auth.register({ username: "mrrp", password: "example123", persist: true });
+     * const session = await client.auth.register({ username: "mrrp", password: "example123", persist: true });
      * ```
      */
-    register: async (body: FHLogin): Promise<{ token: string }> => {
-      const res = await this.request<{ token: string }>("auth/register", { method: "POST", body: JSON.stringify({ username: body.username, password: body.password }) });
+    register: async (body: FHLogin): Promise<FHLoginRes> => {
+      const res = await this.request<FHLoginRes>("auth/register", { method: "POST", body: JSON.stringify({ username: body.username, password: body.password }) });
       if (body.persist !== false) this.#token = res.token;
-      return { token: res.token };
+      return res;
     }
   }
   /**
@@ -150,6 +150,7 @@ export class FolderHarbor {
 }
 
 export type FHLogin = { username: string, password: string, persist?: boolean }
+export type FHLoginRes = { token: string, userID: number, permissions: string[] }
 export type FHClientConfig = { selfUsernameChanges: boolean, registration: boolean }
 export type FHProtocols = { webdav: string | null, ftp: string | null }
 export interface FolderHarborConfig {
