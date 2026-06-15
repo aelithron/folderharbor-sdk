@@ -90,7 +90,7 @@ export class ACLsResource {
    * const { id } = await client.admin.acls.create({ name: "media", allow: ["/srv/tv/**", "/srv/music/**"], deny: ["/srv/music/explicit/**"] });
    * ```
    */
-  public create = async (body: FHCreateACL): Promise<{ aclID: number }> => { return await this.#client.request("admin/acls", { method: "POST", body: JSON.stringify(body) }); }
+  public create = async (body: FHCreateACL): Promise<{ id: number }> => { return await this.#client.request("admin/acls", { method: "POST", body: JSON.stringify(body) }); }
   /**
    * Deletes an ACL.
    * 
