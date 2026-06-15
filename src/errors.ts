@@ -40,6 +40,6 @@ export class FHPermissionError extends FHRequestError {
   constructor(message?: string, code?: string, options?: ErrorOptions) {
     super(message, code, options);
     this.name = this.constructor.name;
-    Object.setPrototypeOf(this, FHAuthError.prototype);
+    Object.setPrototypeOf(this, FHPermissionError.prototype);
   }
 }

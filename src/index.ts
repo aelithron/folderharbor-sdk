@@ -186,3 +186,4 @@ export type FHServerConfig = {
   readonly globalExclusions: string[],
   readonly globalExclusionBypasses: string[]
 }
+export * from "./errors.js";
