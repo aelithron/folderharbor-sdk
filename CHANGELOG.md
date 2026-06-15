@@ -1,6 +1,8 @@
 # Changelog
 This is mostly just a placeholder until I build these into [fh.novatea.dev](https://fh.novatea.dev)! :3 \
 This SDK will stay pegged to the [server's version](https://fh.novatea.dev/server) for the first two numbers, but the patch version may change.
+## v1.1.4
+Fixes some method return and request types. This is kinda breaking but this SDK is too new for me to care, I just forgot the correct names originally.
 ## v1.1.3
 Fixes bundling types more. This is essentially a continuation of the v1.1.1 changes but to bundle the rest of the resource types properly, because `tsup` is the world's most annoying piece of software. In summary, fml
 ## v1.1.2
