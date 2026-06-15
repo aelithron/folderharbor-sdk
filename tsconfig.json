@@ -43,5 +43,5 @@
 
     "ignoreDeprecations": "6.0"
   },
-  "exclude": ["eslint.config.ts", "jest.config.ts", "jest.setup.ts", "dist/", "__tests__/", "mocks/", "example.ts"]
+  "exclude": ["eslint.config.ts", "tsup.config.ts", "jest.config.ts", "jest.setup.ts", "dist/", "__tests__/", "mocks/", "example.ts"]
 }
