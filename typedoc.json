@@ -2,5 +2,6 @@
   "entryPoints": ["src/"],
   "entryPointStrategy": "expand",
   "theme": "fresh",
-  "plugin": ["typedoc-theme-fresh"]
+  "plugin": ["typedoc-theme-fresh"],
+  "exclude": ["**/typebarrel.ts"]
 }
