@@ -1,6 +1,8 @@
 # Changelog
 This is mostly just a placeholder until I build these into [fh.novatea.dev](https://fh.novatea.dev)! :3 \
 This SDK will stay pegged to the [server's version](https://fh.novatea.dev/server) for the first two numbers, but the patch version may change.
+## v1.1.5
+Removes references from the docs (which cluttered them pointlessly), no code changes were made here!
 ## v1.1.4
 Fixes some method return and request types. This is kinda breaking but this SDK is too new for me to care, I just forgot the correct names originally.
 ## v1.1.3
